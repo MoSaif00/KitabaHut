@@ -131,8 +131,13 @@ export default async function SiteIdRoute({ params }: { params: Promise<{ siteId
                                                     <div className="flex w-full justify-end gap-x-4">
                                                         <Tooltip>
                                                             <TooltipTrigger>
-                                                                <Button size="icon" >
-                                                                    <FilePenLine className="size-4" />
+                                                                <Button
+                                                                    size="icon"
+                                                                    asChild
+                                                                >
+                                                                    <Link href={`/dashboard/sites/${siteId}/${item.id}`}>
+                                                                        <FilePenLine className="size-4" />
+                                                                    </Link>
                                                                 </Button>
                                                             </TooltipTrigger>
                                                             <TooltipContent>
@@ -142,8 +147,15 @@ export default async function SiteIdRoute({ params }: { params: Promise<{ siteId
                                                         </Tooltip>
                                                         <Tooltip>
                                                             <TooltipTrigger>
-                                                                <Button size="icon" variant="destructive" aria-label="Delete">
-                                                                    <FileX className="size-4" />
+                                                                <Button
+                                                                    size="icon"
+                                                                    variant="destructive"
+                                                                    aria-label="Delete"
+                                                                    asChild
+                                                                >
+                                                                    <Link href={`/dashboard/sites/${siteId}/${item.id}/delete`}>
+                                                                        <FileX className="size-4" />
+                                                                    </Link>
                                                                 </Button>
                                                             </TooltipTrigger>
                                                             <TooltipContent>

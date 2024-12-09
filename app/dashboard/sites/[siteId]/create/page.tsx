@@ -1,4 +1,5 @@
 "use client";
+
 import { CreatePostAction } from "@/app/actions";
 import TailwindEditor from "@/app/components/dashboard/EditorWrapper";
 import { UploadDropzone } from "@/app/utils/uploadthing";
@@ -24,6 +25,8 @@ export default function ArticleCreationRoute({ params }: { params: Promise<{ sit
 
     const [imageUrl, setImageUrl] = useState<undefined | string>(undefined);
     const [value, setValue] = useState<JSONContent | undefined>(undefined);
+    const [title, setTitle] = useState<undefined | string>(undefined);
+    const [slug, setSlug] = useState<undefined | string>(undefined);
     const [lastResult, action] = useActionState(CreatePostAction, undefined);
     const [form, fields] = useForm({
         lastResult,
@@ -37,8 +40,6 @@ export default function ArticleCreationRoute({ params }: { params: Promise<{ sit
         shouldValidate: 'onBlur',
         shouldRevalidate: 'onInput'
     });
-    const [title, setTitle] = useState<undefined | string>(undefined);
-    const [slug, setSlug] = useState<undefined | string>(undefined);
 
     function handleSlugGeneration() {
         const titleInput = title;
