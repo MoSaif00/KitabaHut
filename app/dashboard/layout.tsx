@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }: { children: ReactNode; }) 
                                 <h3 className="text-2xl">Kitaba<span className="text-primary">Hut</span></h3>
                             </Link>
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1" >
                             <nav className="grid items-start px-2 font-medium lg:px-4">
                                 <DashboardItems />
                             </nav>
