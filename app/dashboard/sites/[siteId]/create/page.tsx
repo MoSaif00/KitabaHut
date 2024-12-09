@@ -17,6 +17,7 @@ import { JSONContent } from "novel";
 import React, { useActionState, useState } from "react";
 import { toast } from "sonner";
 import slugify from 'react-slugify';
+import { SubmitButton } from "@/app/components/dashboard/SubmitButtons";
 
 export default function ArticleCreationRoute({ params }: { params: Promise<{ siteId: string; }>; }) {
     const { siteId } = React.use(params);
@@ -161,7 +162,7 @@ export default function ArticleCreationRoute({ params }: { params: Promise<{ sit
                             <p className="text-red-500 text-sm">{fields.articleContent.errors}</p>
                         </div>
 
-                        <Button className="w-fit">Submit</Button>
+                        <SubmitButton text="Submit" />
                     </form>
                 </CardContent>
                 <CardFooter>
