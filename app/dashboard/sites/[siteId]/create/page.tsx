@@ -1,5 +1,5 @@
 "use client";
-import { CreateSiteAction } from "@/app/actions";
+import { CreatePostAction } from "@/app/actions";
 import TailwindEditor from "@/app/components/dashboard/EditorWrapper";
 import { UploadDropzone } from "@/app/utils/uploadthing";
 import { postSchema } from "@/app/utils/zodSchemas";
@@ -23,7 +23,7 @@ export default function ArticleCreationRoute({ params }: { params: Promise<{ sit
 
     const [imageUrl, setImageUrl] = useState<undefined | string>(undefined);
     const [value, setValue] = useState<JSONContent | undefined>(undefined);
-    const [lastResult, action] = useActionState(CreateSiteAction, undefined);
+    const [lastResult, action] = useActionState(CreatePostAction, undefined);
     const [form, fields] = useForm({
         lastResult,
 
@@ -72,6 +72,7 @@ export default function ArticleCreationRoute({ params }: { params: Promise<{ sit
                         id={form.id} onSubmit={form.onSubmit} action={action}
                         className="flex flex-col gap-6"
                     >
+                        <input type="hidden" name="siteId" value={siteId} />
                         <div className="grid gap-2">
                             <Label>Title</Label>
                             <Input
@@ -79,7 +80,7 @@ export default function ArticleCreationRoute({ params }: { params: Promise<{ sit
                                 name={fields.title.name}
                                 defaultValue={fields.title.initialValue}
                                 placeholder="Write article title"
-                                onChange={e => setTitle(e.target.value)}
+                                onChange={(e) => setTitle(e.target.value)}
                                 value={title}
                             />
                             <p className="text-red-500 text-sm">{fields.title.errors}</p>
