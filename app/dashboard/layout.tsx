@@ -54,7 +54,7 @@ export default function DashboardLayout({ children }: { children: ReactNode; }) 
                             <ModeToggle />
                             <DropdownMenu >
                                 <DropdownMenuTrigger asChild>
-                                    <Button variant="secondary" size='icon' className="rounded-xl">
+                                    <Button variant="secondary" size='icon' className="rounded-xl" >
                                         <CircleUser className="h-5 w-5" />
                                     </Button>
                                 </DropdownMenuTrigger>

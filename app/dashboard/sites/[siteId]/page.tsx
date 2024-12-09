@@ -6,7 +6,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 async function getData(userId: string, siteId: string) {
-    console.log("🚀 ~ getData ~ prisma:", prisma.post);
     const data = await prisma.post.findMany({
         where: {
             userId: userId,
@@ -26,8 +25,8 @@ async function getData(userId: string, siteId: string) {
     return data;
 }
 
-export default async function SiteIdRoute({ params }: { params: { siteId: string; }; }) {
-    const siteId = params.siteId;
+export default async function SiteIdRoute({ params }: { params: Promise<{ siteId: string; }>; }) {
+    const siteId = (await params).siteId;
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
@@ -52,7 +51,7 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
                     </Link>
                 </Button>
                 <Button asChild>
-                    <Link href={'#'}>
+                    <Link href={`/dashboard/sites/${siteId}/create`}>
                         <NotebookPen className="size-4 mr-2" />Create Article
                     </Link>
                 </Button>
@@ -65,9 +64,9 @@ export default async function SiteIdRoute({ params }: { params: { siteId: string
                     <h2 className="mt-6 mb-8 text-xl font-semibold">You do not have any article created</h2>
                     <Button asChild>
                         <Link
-                            href={'/dashboard/sites/new'}
+                            href={`/dashboard/sites/${siteId}/create`}
                         >
-                            <NotebookPen className="mr-2 size-4" />Create Blog
+                            <NotebookPen className="mr-2 size-4" />Create Article
                         </Link>
                     </Button>
                 </div>
