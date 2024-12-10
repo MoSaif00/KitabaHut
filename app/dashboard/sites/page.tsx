@@ -62,10 +62,10 @@ export default async function SitesRoute() {
                                 height={200}
                             />
                             <CardHeader>
-                                <CardTitle>
+                                <CardTitle className="truncate">
                                     {item.name}
                                 </CardTitle>
-                                <CardDescription>
+                                <CardDescription className="line-clamp-3">
                                     {item.description}
                                 </CardDescription>
                             </CardHeader>
