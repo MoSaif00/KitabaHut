@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }: { children: ReactNode; }) 
                         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
                             <Link href={'/'} className="flex items-center gap-2 font-semibold" >
                                 <Image src={Logo} alt="kitaba logo" className="size-8" />
-                                <h3 className="text-2xl">Kitaba<span className="text-primary">Hut</span></h3>
+                                <h3 className="text-2xl font-semibold tracking-tight">Kitaba<span className="text-primary">Hut</span></h3>
                             </Link>
                         </div>
                         <div className="flex-1" >
