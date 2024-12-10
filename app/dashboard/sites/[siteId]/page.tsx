@@ -14,6 +14,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { EmptyState } from "@/app/components/dashboard/EmptyState";
 
 async function getData(userId: string, siteId: string) {
     const data = await prisma.post.findMany({
@@ -67,19 +68,12 @@ export default async function SiteIdRoute({ params }: { params: Promise<{ siteId
                 </Button>
             </div>
             {data === undefined || data.length === 0 ? (
-                <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center animate-in fade-in-50">
-                    <div className="flex size-20 items-center justify-center rounded-full bg-primary/10">
-                        <FileIcon className="size-10 text-primary" />
-                    </div>
-                    <h2 className="mt-6 mb-8 text-xl font-semibold">You do not have any article created</h2>
-                    <Button asChild>
-                        <Link
-                            href={`/dashboard/sites/${siteId}/create`}
-                        >
-                            <NotebookPen className="mr-2 size-4" />Create Article
-                        </Link>
-                    </Button>
-                </div>
+                <EmptyState
+                    title="You do not have any articles yet"
+                    description="Currently, you do not have any articles yet. Please, create new article to be able to see them here"
+                    href={`/dashboard/sites/${siteId}/create`}
+                    buttonText="Create new article"
+                />
             ) : (
                 <div>
                     <Card>
