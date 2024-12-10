@@ -27,6 +27,11 @@ async function getData(userId: string, siteId: string) {
             title: true,
             createdAt: true,
             id: true,
+            Site: {
+                select: {
+                    subdirectory: true
+                }
+            }
         },
         orderBy: {
             createdAt: 'desc'
@@ -52,7 +57,7 @@ export default async function SiteIdRoute({ params }: { params: Promise<{ siteId
         <>
             <div className="flex w-full justify-end gap-x-4">
                 <Button asChild variant="secondary">
-                    <Link href={'#'}>
+                    <Link href={`/blog/${data[0].Site?.subdirectory}`}>
                         <BookOpenText className="size-4 mr-2" /> View Blog
                     </Link>
                 </Button>
