@@ -97,3 +97,35 @@ export async function DeletePostAction( formData: FormData) {
 
     return redirect(`/dashboard/sites/${formData.get('siteId')}`)
 }
+
+
+export async function UpdateSiteImageAction(formData: FormData) {
+    const user = await requireUser()
+
+    const response = await prisma.site.update({
+        where:{
+            userId: user.id,
+            id: formData.get("siteId") as string
+
+        },
+        data:{
+            imageUrl: formData.get('imageUrl') as string
+        }
+    })
+
+    return redirect(`/dashboard/sites/${formData.get('siteId')}`)
+}
+
+export async function DeleteSiteAction(formData: FormData) {
+    const user = await requireUser()
+
+    const response = await prisma.site.delete({
+        where:{
+            userId: user.id,
+            id: formData.get("siteId") as string
+
+        },
+    })
+
+    return redirect(`/dashboard/sites`)
+}
