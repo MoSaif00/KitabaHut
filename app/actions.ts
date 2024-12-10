@@ -2,15 +2,25 @@
 
 import { redirect } from "next/navigation";
 import {parseWithZod} from '@conform-to/zod'
-import { postSchema, siteSchema } from "./utils/zodSchemas";
+import { postSchema, siteCreationSchema, siteSchema } from "./utils/zodSchemas";
 import prisma from "./utils/db";
 import { requireUser } from "./utils/requireUser";
 
 export async function CreateSiteAction(prevState: any, formData: FormData) {
     const user = await requireUser()
 
-    const submission = parseWithZod(formData,{
-        schema: siteSchema
+    const submission = await parseWithZod(formData,{
+        schema: siteCreationSchema({
+            async isSubdirectoryUnique() {
+                const existingSubDir = await prisma.site.findUnique({
+                    where:{
+                        subdirectory: formData.get('subdirectory') as string
+                    }
+                })
+                return !existingSubDir
+            },
+        }),
+        async: true
     })
 
     if(submission.status !== 'success'){
