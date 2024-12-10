@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BadgeCheck } from "lucide-react";
 import { SubmitButton } from "../dashboard/SubmitButtons";
+import Link from "next/link";
+import { CreateSubscription } from "@/app/actions";
 
 interface pricingProps {
     id: number;
@@ -86,7 +88,10 @@ export function PricingTable() {
                         <CardFooter>
                             {
                                 plan.id === 1 ? (
-                                    <form className="w-full">
+                                    <form
+                                        className="w-full"
+                                        action={CreateSubscription}
+                                    >
                                         <SubmitButton
                                             text="Buy plan"
                                             className="mt-5 w-full"
@@ -96,8 +101,11 @@ export function PricingTable() {
                                     <Button
                                         variant="outline"
                                         className="mt-5 w-full"
+                                        asChild
                                     >
-                                        Try for free
+                                        <Link href={'/dashboard'}>
+                                            Try for free
+                                        </Link>
                                     </Button>
 
                                 )

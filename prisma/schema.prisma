@@ -26,6 +26,23 @@ model User {
 
   Site  Site[]
   posts Post[]
+
+  Subscription Subscription?
+}
+
+model Subscription {
+  stripeSubscriptionId String @id @unique
+  interval             String
+  status               String
+  planId               String
+  currentPeriodStart   Int
+  currentPeriodEnd     Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @unique
 }
 
 model Site {

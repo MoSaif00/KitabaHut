@@ -17,27 +17,47 @@ import {
 import { EmptyState } from "@/app/components/dashboard/EmptyState";
 
 async function getData(userId: string, siteId: string) {
-    const data = await prisma.post.findMany({
+    // const data = await prisma.post.findMany({
+    //     where: {
+    //         userId: userId,
+    //         siteId: siteId
+    //     },
+    //     select: {
+    //         image: true,
+    //         title: true,
+    //         createdAt: true,
+    //         id: true,
+    //         Site: {
+    //             select: {
+    //                 subdirectory: true
+    //             }
+    //         }
+    //     },
+    //     orderBy: {
+    //         createdAt: 'desc'
+    //     }
+    // });
+
+    const data = await prisma.site.findUnique({
         where: {
+            id: siteId,
             userId: userId,
-            siteId: siteId
         },
         select: {
-            image: true,
-            title: true,
-            createdAt: true,
-            id: true,
-            Site: {
+            subdirectory: true,
+            posts: {
                 select: {
-                    subdirectory: true
+                    image: true,
+                    title: true,
+                    createdAt: true,
+                    id: true,
+                },
+                orderBy: {
+                    createdAt: 'desc'
                 }
-            }
+            },
         },
-        orderBy: {
-            createdAt: 'desc'
-        }
     });
-
     return data;
 }
 
@@ -57,7 +77,7 @@ export default async function SiteIdRoute({ params }: { params: Promise<{ siteId
         <>
             <div className="flex w-full justify-end gap-x-4">
                 <Button asChild variant="secondary">
-                    <Link href={`/blog/${data[0].Site?.subdirectory}`}>
+                    <Link href={`/blog/${data?.subdirectory}`}>
                         <BookOpenText className="size-4 mr-2" /> View Blog
                     </Link>
                 </Button>
@@ -72,7 +92,7 @@ export default async function SiteIdRoute({ params }: { params: Promise<{ siteId
                     </Link>
                 </Button>
             </div>
-            {data === undefined || data.length === 0 ? (
+            {data?.posts === undefined || data.posts.length === 0 ? (
                 <EmptyState
                     title="You do not have any articles yet"
                     description="Currently, you do not have any articles yet. Please, create new article to be able to see them here"
@@ -102,7 +122,7 @@ export default async function SiteIdRoute({ params }: { params: Promise<{ siteId
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {data.map((item) => (
+                                    {data.posts.map((item) => (
                                         <TableRow key={item.id}>
                                             <TableCell>
                                                 <Image
