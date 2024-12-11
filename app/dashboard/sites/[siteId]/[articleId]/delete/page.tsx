@@ -5,7 +5,7 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import Link from "next/link";
 
 
-export default async function DeleteArticleRoute({ params }: { params: { siteId: string, articleId: string; }; }) {
+export default function DeleteArticleRoute({ params }: { params: { siteId: string, articleId: string; }; }) {
     const siteId = params.siteId;
     const articleId = params.articleId;
 

@@ -5,6 +5,8 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+type editArticleProps = Promise<{ siteId: string; articleId: string; }>;
+
 async function getData(postId: string) {
     const data = await prisma.post.findUnique({
         where: {
@@ -26,21 +28,22 @@ async function getData(postId: string) {
 
     return data;
 }
-export default async function EditArticleRoute({ params }: { params: { siteId: string, articleId: string; }; }) {
+export default async function EditArticleRoute({ params }: { params: editArticleProps; }) {
+    const { articleId, siteId } = await params;
+    const data = await getData(articleId);
 
-    const data = await getData(params.articleId);
     return (
         <div>
             <div className="flex items-center">
                 <Button size="icon" variant="outline" className="mr-3" asChild>
-                    <Link href={`/dashboard/sites/${params.siteId}`}>
+                    <Link href={`/dashboard/sites/${siteId}`}>
                         <ArrowLeft className="size-4" />
                     </Link>
                 </Button>
                 <h1 className="text-xl font-semibold">Edit Article</h1>
             </div>
 
-            <EditArticleForm data={data} siteId={params.siteId} />
+            <EditArticleForm data={data} siteId={siteId} />
         </div>
     );
 }

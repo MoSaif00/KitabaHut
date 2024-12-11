@@ -16,28 +16,9 @@ import {
 } from "@/components/ui/tooltip";
 import { EmptyState } from "@/app/components/dashboard/EmptyState";
 
-async function getData(userId: string, siteId: string) {
-    // const data = await prisma.post.findMany({
-    //     where: {
-    //         userId: userId,
-    //         siteId: siteId
-    //     },
-    //     select: {
-    //         image: true,
-    //         title: true,
-    //         createdAt: true,
-    //         id: true,
-    //         Site: {
-    //             select: {
-    //                 subdirectory: true
-    //             }
-    //         }
-    //     },
-    //     orderBy: {
-    //         createdAt: 'desc'
-    //     }
-    // });
+type siteIdProps = Promise<{ siteId: string; }>;
 
+async function getData(userId: string, siteId: string) {
     const data = await prisma.site.findUnique({
         where: {
             id: siteId,
@@ -61,8 +42,8 @@ async function getData(userId: string, siteId: string) {
     return data;
 }
 
-export default async function SiteIdRoute({ params }: { params: { siteId: string; }; }) {
-    const siteId = params.siteId;
+export default async function SiteIdRoute({ params }: { params: siteIdProps; }) {
+    const { siteId } = await params;
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
