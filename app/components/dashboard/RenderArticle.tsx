@@ -15,6 +15,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import CodeBlock from '@tiptap/extension-code-block';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
+import Bold from '@tiptap/extension-bold';
 
 export function RenderArticle({ json }: { json: JSONContent; }) {
     const jsonOutPut = useMemo(() => {
@@ -32,7 +33,8 @@ export function RenderArticle({ json }: { json: JSONContent; }) {
             TextStyle,
             CodeBlock,
             TaskList,
-            TaskItem
+            TaskItem,
+            Bold
         ]);
     }, [json]);
 

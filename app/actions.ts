@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { redirect } from "next/navigation";
 import {parseWithZod} from '@conform-to/zod'
-import { postSchema, siteCreationSchema, siteSchema } from "./utils/zodSchemas";
+import { postSchema, siteCreationSchema } from "./utils/zodSchemas";
 import prisma from "./utils/db";
 import { requireUser } from "./utils/requireUser";
 import { stripe } from "./utils/stripe";
@@ -58,7 +59,7 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
             return submission.reply()
         }
 
-        const response = await prisma.site.create({
+        await prisma.site.create({
             data:{
                 description: submission.value.description,
                 name: submission.value.name,
@@ -82,7 +83,7 @@ export async function CreatePostAction(prevState: any, formData: FormData) {
         return submission.reply()
     }
 
-    const response = await prisma.post.create({
+    await prisma.post.create({
         data:{
             title: submission.value.title,
             smallDescription: submission.value.smallDescription,
@@ -108,7 +109,7 @@ export async function EditPostAction(prevState: any, formData: FormData) {
         return submission.reply()
     }
 
-    const response = await prisma.post.update({
+    await prisma.post.update({
         where:{
             userId: user.id,
             id: formData.get('articleId') as string,
@@ -130,7 +131,7 @@ export async function EditPostAction(prevState: any, formData: FormData) {
 export async function DeletePostAction( formData: FormData) {
     const user = await requireUser()
 
-    const response = await prisma.post.delete({
+    await prisma.post.delete({
         where:{
             userId: user.id,
             id: formData.get('articleId') as string,
@@ -144,7 +145,7 @@ export async function DeletePostAction( formData: FormData) {
 export async function UpdateSiteImageAction(formData: FormData) {
     const user = await requireUser()
 
-    const response = await prisma.site.update({
+    await prisma.site.update({
         where:{
             userId: user.id,
             id: formData.get("siteId") as string
@@ -161,7 +162,7 @@ export async function UpdateSiteImageAction(formData: FormData) {
 export async function DeleteSiteAction(formData: FormData) {
     const user = await requireUser()
 
-    const response = await prisma.site.delete({
+    await prisma.site.delete({
         where:{
             userId: user.id,
             id: formData.get("siteId") as string

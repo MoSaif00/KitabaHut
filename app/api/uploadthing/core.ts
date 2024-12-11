@@ -19,6 +19,7 @@ export const ourFileRouter = {
     },
   })
     // Set permissions and file types for this FileRoute
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .middleware(async ({ req }) => {
       // This code runs on your server before upload
       const { getUser } = getKindeServerSession();
