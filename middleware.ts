@@ -2,7 +2,7 @@ import {withAuth} from '@kinde-oss/kinde-auth-nextjs/middleware'
 
 
 export default withAuth({
-    loginPage: '/api/auth/login',
+    loginPage: '/api/auth/[kindeAuth]',
     isReturnToCurrentPage: true,
 });
 
