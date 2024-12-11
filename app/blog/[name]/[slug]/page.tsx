@@ -7,6 +7,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JSONContent } from "novel";
 
+type slugParams = Promise<{ slug: string; name: string; }>;
+
+
 async function getData(slug: string) {
     const data = await prisma.post.findUnique({
         where: {
@@ -27,9 +30,8 @@ async function getData(slug: string) {
 
     return data;
 }
-export default async function SlugRoute({ params }: { params: { slug: string; name: string; }; }) {
-    const slugValue = params.slug;
-    const subDirName = params.name;
+export default async function SlugRoute({ params }: { params: slugParams; }) {
+    const { slug: slugValue, name: subDirName } = await params;
     const data = await getData(slugValue);
 
     return (
