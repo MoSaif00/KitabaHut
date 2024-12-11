@@ -19,9 +19,19 @@ import React, { useActionState, useState } from "react";
 import { toast } from "sonner";
 import slugify from 'react-slugify';
 import { SubmitButton } from "@/app/components/dashboard/SubmitButtons";
+import { GetServerSideProps } from "next";
 
 
-interface articleCreationProps { params: { siteId: string; }; };
+interface articleCreationProps {
+    params: { siteId: string; };
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    if (!params || !params.siteId) {
+        return { notFound: true };
+    }
+    return { props: { params } };
+};
 
 export default function ArticleCreationRoute({ params }: articleCreationProps) {
     const { siteId } = params;
