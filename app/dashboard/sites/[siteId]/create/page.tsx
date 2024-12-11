@@ -19,14 +19,11 @@ import React, { useActionState, useState } from "react";
 import { toast } from "sonner";
 import slugify from 'react-slugify';
 import { SubmitButton } from "@/app/components/dashboard/SubmitButtons";
+import { useParams } from "next/navigation";
 
 
-interface ArticleCreationProps {
-    params: { siteId: string; };
-}
-
-export default function ArticleCreationRoute({ params }: ArticleCreationProps) {
-    const { siteId } = params;
+export default function ArticleCreationRoute() {
+    const { siteId } = useParams();
 
     const [imageUrl, setImageUrl] = useState<undefined | string>(undefined);
     const [value, setValue] = useState<JSONContent | undefined>(undefined);
