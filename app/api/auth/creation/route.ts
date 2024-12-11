@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 export async function  GET() {
     const {getUser} = getKindeServerSession();
     const user = await getUser();
+    console.log("🚀 ~ GET ~ user:", user);
 
     if(!user || user === null || !user.id){
         throw new Error("Something went wrong getting user");
@@ -27,6 +28,9 @@ export async function  GET() {
             }
         })
     }
+    const testEnv = process.env.NODE_ENV === 'production' ? 'https://kitaba-hut.vercel.app/dashboard' : 'http://localhost:3000/dashboard'
+    console.log("🚀 ~ GET ~ testEnv:",testEnv);
 
-    return NextResponse.redirect(process.env.NODE_ENV === 'production' ? `https://kitaba-hut.vercel.app/dashboard` : 'http://localhost:3000/dashboard')
+ 
+    return NextResponse.redirect(process.env.NODE_ENV === 'production' ? 'https://kitaba-hut.vercel.app/dashboard' : 'http://localhost:3000/dashboard')
 }
