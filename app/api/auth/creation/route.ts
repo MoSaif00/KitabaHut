@@ -31,7 +31,7 @@ export async function GET() {
 
   return NextResponse.redirect(
     process.env.NODE_ENV === "production"
-      ? "https://kitaba-hut.vercel.app/dasboard"
+      ? "https://kitaba-hut.vercel.app/dashboard"
       : "http://localhost:3000/dashboard"
   );
 }
