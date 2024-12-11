@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
+type deleteArticleProps = Promise<{ siteId: string, articleId: string; }>;
 
-export default function DeleteArticleRoute({ params }: { params: { siteId: string, articleId: string; }; }) {
-    const siteId = params.siteId;
-    const articleId = params.articleId;
+
+export default async function DeleteArticleRoute({ params }: { params: deleteArticleProps; }) {
+    const { siteId, articleId } = await params;
 
     return (
         <div className="flex flex-1 items-center justify-center">

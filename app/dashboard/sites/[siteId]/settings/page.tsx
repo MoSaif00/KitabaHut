@@ -7,7 +7,9 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-export default function SettingsSiteRoute({ params }: { params: { siteId: string; }; }) {
+type settingsSiteProps = { siteId: string; };
+
+export default function SettingsSiteRoute({ params }: { params: settingsSiteProps; }) {
     const siteId = params.siteId;
 
     return (
