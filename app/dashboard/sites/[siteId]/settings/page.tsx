@@ -7,10 +7,10 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-type settingsSiteProps = { siteId: string; };
+type settingsSiteProps = Promise<{ siteId: string; }>;
 
-export default function SettingsSiteRoute({ params }: { params: settingsSiteProps; }) {
-    const siteId = params.siteId;
+export default async function SettingsSiteRoute({ params }: { params: settingsSiteProps; }) {
+    const { siteId } = await params;
 
     return (
         <>
