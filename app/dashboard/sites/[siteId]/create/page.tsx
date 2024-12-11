@@ -21,9 +21,9 @@ import slugify from 'react-slugify';
 import { SubmitButton } from "@/app/components/dashboard/SubmitButtons";
 
 
-type articleCreationProps = { siteId: string; };
+interface articleCreationProps { params: { siteId: string; }; };
 
-export default function ArticleCreationRoute({ params }: { params: articleCreationProps; }) {
+export default function ArticleCreationRoute({ params }: articleCreationProps) {
     const { siteId } = params;
 
     const [imageUrl, setImageUrl] = useState<undefined | string>(undefined);

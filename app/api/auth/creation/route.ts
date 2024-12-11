@@ -28,5 +28,5 @@ export async function  GET() {
         })
     }
 
-    return NextResponse.redirect('http://localhost:3000/dashboard/')
+    return NextResponse.redirect(process.env.NODE_ENV === 'production' ? `${process.env.SITE_URL}/dashboard/` : 'http://localhost:3000/dashboard/')
 }
