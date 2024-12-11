@@ -1,5 +1,6 @@
 import { handleAuth } from "@kinde-oss/kinde-auth-nextjs/server";
-export const GET = async (req, res) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const GET = async (req: { url: any; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error: any; }): void; new(): any; }; }; }) => {
     try
     {
         console.log("Incoming Request:", req.url);
