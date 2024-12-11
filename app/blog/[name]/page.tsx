@@ -8,6 +8,8 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import { Button } from "@/components/ui/button";
 import DefaultImage from '@/public/defaultImage.png';
 
+type blogIndexProps = Promise<{ name: string; }>;
+
 async function getData(subDir: string) {
     const data = await prisma.site.findUnique({
         where: {
@@ -38,8 +40,8 @@ async function getData(subDir: string) {
     return data;
 }
 
-export default async function BlogIndexPage({ params }: { params: { name: string; }; }) {
-    const subDirName = params.name;
+export default async function BlogIndexPage({ params }: { params: blogIndexProps; }) {
+    const { name: subDirName } = await params;
 
     const data = await getData(subDirName);
 
