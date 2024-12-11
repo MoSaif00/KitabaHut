@@ -2,7 +2,7 @@ import prisma from "@/app/utils/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function  GET() {
+export async function GET() {
     const {getUser} = getKindeServerSession();
     const user = await getUser();
 
@@ -17,6 +17,7 @@ export async function  GET() {
     });
 
     if(!dbUser){
+        console.log("🚀 ~ GET ~ !dbUser:", !dbUser);
         dbUser = await prisma.user.create({
             data:{
                 id: user.id,

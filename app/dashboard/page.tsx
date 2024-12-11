@@ -35,6 +35,7 @@ async function getData(userId: string) {
 }
 export default async function DashboardIndexPage() {
     const user = await requireUser();
+    console.log("🚀 ~ DashboardIndexPage ~ user:", user);
     const { sites, articles } = await getData(user.id);
 
     return (
