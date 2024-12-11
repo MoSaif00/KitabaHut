@@ -3,14 +3,11 @@ import { SubmitButton } from "@/app/components/dashboard/SubmitButtons";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import React from "react";
 
-interface deleteArticleProps {
-    params: {
-        siteId: string;
-        articleId: string;
-    };
-}
-export default function DeleteArticleRoute({ params }: deleteArticleProps) {
+
+export default function DeleteArticleRoute({ params }: { params: Promise<{ siteId: string, articleId: string; }>; }) {
+    const { siteId, articleId } = React.use(params);
     return (
         <div className="flex flex-1 items-center justify-center">
             <Card className="max-w-xl">
@@ -20,13 +17,13 @@ export default function DeleteArticleRoute({ params }: deleteArticleProps) {
                 </CardHeader>
                 <CardFooter className="w-full flex justify-between">
                     <Button variant="secondary" asChild>
-                        <Link href={`/dashboard/sites/${params.siteId}`}>
+                        <Link href={`/dashboard/sites/${siteId}`}>
                             Cancel
                         </Link>
                     </Button>
                     <form action={DeletePostAction}>
-                        <input type="hidden" name='siteId' value={params.siteId} />
-                        <input type="hidden" name="articleId" value={params.articleId} />
+                        <input type="hidden" name='siteId' value={siteId} />
+                        <input type="hidden" name="articleId" value={articleId} />
                         <SubmitButton
                             variant={"destructive"}
                             text="Delete article"
