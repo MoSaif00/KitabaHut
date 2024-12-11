@@ -3,11 +3,12 @@ import { SubmitButton } from "@/app/components/dashboard/SubmitButtons";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import React from "react";
 
 
-export default function DeleteArticleRoute({ params }: { params: Promise<{ siteId: string, articleId: string; }>; }) {
-    const { siteId, articleId } = React.use(params);
+export default async function DeleteArticleRoute({ params }: { params: Promise<{ siteId: string, articleId: string; }>; }) {
+    const siteId = (await params).siteId;
+    const articleId = (await params).articleId;
+
     return (
         <div className="flex flex-1 items-center justify-center">
             <Card className="max-w-xl">
