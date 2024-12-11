@@ -61,8 +61,8 @@ async function getData(userId: string, siteId: string) {
     return data;
 }
 
-export default async function SiteIdRoute({ params }: { params: Promise<{ siteId: string; }>; }) {
-    const siteId = (await params).siteId;
+export default async function SiteIdRoute({ params }: { params: { siteId: string; }; }) {
+    const siteId = params.siteId;
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 

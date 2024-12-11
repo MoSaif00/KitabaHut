@@ -38,8 +38,8 @@ async function getData(subDir: string) {
     return data;
 }
 
-export default async function BlogIndexPage({ params }: { params: Promise<{ name: string; }>; }) {
-    const subDirName = (await params).name;
+export default async function BlogIndexPage({ params }: { params: { name: string; }; }) {
+    const subDirName = params.name;
 
     const data = await getData(subDirName);
 

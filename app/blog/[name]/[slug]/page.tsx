@@ -27,9 +27,9 @@ async function getData(slug: string) {
 
     return data;
 }
-export default async function SlugRoute({ params }: { params: Promise<{ slug: string; name: string; }>; }) {
-    const slugValue = (await params).slug;
-    const subDirName = (await params).name;
+export default async function SlugRoute({ params }: { params: { slug: string; name: string; }; }) {
+    const slugValue = params.slug;
+    const subDirName = params.name;
     const data = await getData(slugValue);
 
     return (

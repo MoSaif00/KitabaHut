@@ -5,9 +5,9 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import Link from "next/link";
 
 
-export default async function DeleteArticleRoute({ params }: { params: Promise<{ siteId: string, articleId: string; }>; }) {
-    const siteId = (await params).siteId;
-    const articleId = (await params).articleId;
+export default async function DeleteArticleRoute({ params }: { params: { siteId: string, articleId: string; }; }) {
+    const siteId = params.siteId;
+    const articleId = params.articleId;
 
     return (
         <div className="flex flex-1 items-center justify-center">

@@ -20,8 +20,8 @@ import { toast } from "sonner";
 import slugify from 'react-slugify';
 import { SubmitButton } from "@/app/components/dashboard/SubmitButtons";
 
-export default function ArticleCreationRoute({ params }: { params: Promise<{ siteId: string; }>; }) {
-    const { siteId } = React.use(params);
+export default function ArticleCreationRoute({ params }: { params: { siteId: string; }; }) {
+    const siteId = params.siteId;
 
     const [imageUrl, setImageUrl] = useState<undefined | string>(undefined);
     const [value, setValue] = useState<JSONContent | undefined>(undefined);
