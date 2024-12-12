@@ -5,6 +5,7 @@ A user-friendly blog platform where users can create personal blogs and publish 
 ## ✨ [App Demo](https://kitabahut.vercel.app)
 
 ![Dashboard](./public/LightDashboard.png)
+
 ![Blog Site](./public/BlogNew.png)
 
 ## Features
