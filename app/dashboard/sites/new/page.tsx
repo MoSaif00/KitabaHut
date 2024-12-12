@@ -25,6 +25,13 @@ export default function NewSiteRoute() {
         shouldValidate: 'onBlur',
         shouldRevalidate: 'onInput'
     });
+
+    const handleSubdirectoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        e.target.value = e.target.value.toLowerCase();
+    };
+
+
     return (
         <div className="flex flex-col flex-1 items-center justify-center">
             <Card className="max-w-[550px]">
@@ -52,6 +59,7 @@ export default function NewSiteRoute() {
                                     key={fields.subdirectory.key}
                                     defaultValue={fields.subdirectory.initialValue}
                                     placeholder="Subdirectory"
+                                    onChange={handleSubdirectoryChange}
                                 />
                                 <p className="text-red-500 text-sm">{fields.subdirectory.errors}</p>
                             </div>

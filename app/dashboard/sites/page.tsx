@@ -9,28 +9,45 @@ import { EmptyState } from "@/app/components/dashboard/EmptyState";
 import { requireAuth } from "@/app/utils/auth";
 
 async function getData(userId: string) {
-    const data = await prisma.site.findMany({
-        where: {
-            userId: userId,
-        },
-        orderBy: {
-            createdAt: 'desc',
-        }
-    });
 
-    return data;
+    const [subStatus, sites] = await Promise.all([
+        prisma.subscription.findUnique({
+            where: {
+                userId: userId
+            },
+            select: {
+                status: true
+            }
+        }),
+        prisma.site.findMany({
+            where: {
+                userId: userId
+            },
+        })
+    ]);
+
+
+    return {
+        sites,
+        subStatus
+    };
 }
 export default async function SitesRoute() {
     const userId = await requireAuth();
 
-    const data = await getData(userId);
+    const { sites: data, subStatus } = await getData(userId);
 
     return (
         <>
             <div className="flex w-full justify-end">
                 <Button asChild>
                     <Link
-                        href={'/dashboard/sites/new'}
+                        href={
+                            (!subStatus || subStatus.status !== 'active')
+                                && data.length >= 1
+                                ? '/dashboard/pricing'
+                                : '/dashboard/sites/new'
+                        }
                     >
                         <PlusCircle className="mr-2 size-4" />Start a site
                     </Link>
