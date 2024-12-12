@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     const redirectUrl = new URL(
       "/dashboard",
       process.env.NODE_ENV === "production"
-        ? "https://kitaba-hut.vercel.app"
+        ? "https://kitabahut.vercel.app"
         : "http://localhost:3000"
     );
 
