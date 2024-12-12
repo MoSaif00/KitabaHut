@@ -26,7 +26,6 @@ import YouTube from '@tiptap/extension-youtube';
 import Strike from '@tiptap/extension-strike';
 import Placeholder from '@tiptap/extension-placeholder';
 import Italic from '@tiptap/extension-italic';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import Dropcursor from '@tiptap/extension-dropcursor';
 import FloatingMenu from '@tiptap/extension-floating-menu';
 import Gapcursor from '@tiptap/extension-gapcursor';
@@ -65,7 +64,6 @@ export function RenderArticle({ json }: { json: JSONContent; }) {
             Strike,
             Placeholder,
             Italic,
-            CodeBlockLowlight,
             Dropcursor,
             FloatingMenu,
             Gapcursor,
