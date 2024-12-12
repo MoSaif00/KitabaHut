@@ -1,13 +1,12 @@
 import prisma from "@/app/utils/db";
 import { Button } from "@/components/ui/button";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import DefaultImage from '@/public/defaultImage.png';
 import Image from "next/image";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/app/components/dashboard/EmptyState";
+import { requireAuth } from "@/app/utils/auth";
 
 async function getData(userId: string) {
     const data = await prisma.site.findMany({
@@ -22,13 +21,9 @@ async function getData(userId: string) {
     return data;
 }
 export default async function SitesRoute() {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
-    if (!user) {
-        return redirect('api/auth/login');
-    }
+    const userId = await requireAuth();
 
-    const data = await getData(user.id);
+    const data = await getData(userId);
 
     return (
         <>

@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BookOpenText, FilePenLine, FileX, NotebookPen, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +14,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { EmptyState } from "@/app/components/dashboard/EmptyState";
+import { requireAuth } from "@/app/utils/auth";
 
 type siteIdProps = Promise<{ siteId: string; }>;
 
@@ -44,14 +44,10 @@ async function getData(userId: string, siteId: string) {
 
 export default async function SiteIdRoute({ params }: { params: siteIdProps; }) {
     const { siteId } = await params;
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
+    const userId = await requireAuth();
 
-    if (!user) {
-        return redirect('api/auth/login');
-    }
 
-    const data = await getData(user.id, siteId);
+    const data = await getData(userId, siteId);
 
 
     return (
