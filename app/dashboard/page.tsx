@@ -1,12 +1,12 @@
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "../components/dashboard/EmptyState";
-import { requireUser } from "../utils/requireUser";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import DefaultImage from '@/public/defaultImage.png';
 import prisma from "../utils/db";
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 
 async function getData(userId: string) {
     const [sites, articles] = await Promise.all([
@@ -36,16 +36,12 @@ async function getData(userId: string) {
 }
 
 export default async function DashboardIndexPage() {
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <DashboardContent />
-        </Suspense>
-    );
-}
+    const { userId } = await auth();
 
-async function DashboardContent() {
-    const user = await requireUser();
-    const { sites, articles } = await getData(user.id);
+    if (!userId) {
+        return redirect('/sign-in');
+    }
+    const { sites, articles } = await getData(userId);
 
     return (
         <div className="">

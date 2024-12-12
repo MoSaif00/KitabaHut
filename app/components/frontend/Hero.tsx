@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "../dashboard/ModeToggle";
-import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { Button } from "@/components/ui/button";
 import Logo from '@/public/kitaba.svg';
 import { HeroImageSwitcher } from "./HeroImageSwitcher";
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 
 
 export function Hero() {
@@ -24,16 +24,16 @@ export function Hero() {
 
                 <nav className="hidden md:flex md:justify-end md:space-x-4">
                     <ModeToggle />
-                    <LoginLink>
+                    <SignInButton mode="modal">
                         <Button variant='secondary'>
                             Sign in
                         </Button>
-                    </LoginLink>
-                    <RegisterLink>
+                    </SignInButton >
+                    <SignUpButton mode="modal">
                         <Button>
                             Sign up
                         </Button>
-                    </RegisterLink>
+                    </SignUpButton>
                 </nav>
             </div>
 
@@ -61,11 +61,11 @@ export function Hero() {
                             No coding, no hassle. Build beautiful blogs effortlessly and start sharing your ideas with the world — fast and easy.                        </p>
 
                         <div className="flex items-center gap-x-4 w-full justify-center mt-8">
-                            <RegisterLink>
+                            <SignUpButton mode="modal">
                                 <Button>
                                     Try for free
                                 </Button>
-                            </RegisterLink>
+                            </SignUpButton>
                         </div>
                     </div>
 

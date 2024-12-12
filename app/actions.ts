@@ -4,17 +4,17 @@
 import { redirect } from "next/navigation";
 import {parseWithZod} from '@conform-to/zod'
 import { postSchema, siteCreationSchema } from "./utils/zodSchemas";
-import { requireUser } from "./utils/requireUser";
+import { requireAuth} from "./utils/auth";
 import { stripe } from "./utils/stripe";
 import prisma from "./utils/db";
 
 export async function CreateSiteAction(prevState: any, formData: FormData) {
-    const user = await requireUser()
+    const userId = await requireAuth()
 
     const [subStatus, sites] = await Promise.all([
         prisma.subscription.findUnique({
             where:{
-                userId: user.id
+                userId: userId
             },
             select:{
                 status:true
@@ -22,7 +22,7 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
         }),
         prisma.site.findMany({
             where:{
-                userId: user.id
+                userId: userId
             },
         })
     ])
@@ -64,7 +64,7 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
                 description: submission.value.description,
                 name: submission.value.name,
                 subdirectory: submission.value.subdirectory,
-                userId: user.id
+                userId: userId
             }
         })
 
@@ -73,7 +73,7 @@ export async function CreateSiteAction(prevState: any, formData: FormData) {
 }
 
 export async function CreatePostAction(prevState: any, formData: FormData) {
-    const user = await requireUser()
+    const userId = await requireAuth()
 
     const submission = parseWithZod(formData,{
         schema: postSchema
@@ -90,7 +90,7 @@ export async function CreatePostAction(prevState: any, formData: FormData) {
             slug: submission.value.slug,
             articleContent: JSON.parse(submission.value.articleContent),
             image: submission.value.coverImage,
-            userId: user.id,
+            userId: userId,
             siteId: formData.get("siteId") as string
         }
     })
@@ -99,7 +99,7 @@ export async function CreatePostAction(prevState: any, formData: FormData) {
 }
 
 export async function EditPostAction(prevState: any, formData: FormData) {
-    const user = await requireUser()
+    const userId = await requireAuth()
 
     const submission = parseWithZod(formData,{
         schema: postSchema
@@ -111,7 +111,7 @@ export async function EditPostAction(prevState: any, formData: FormData) {
 
     await prisma.post.update({
         where:{
-            userId: user.id,
+            userId: userId,
             id: formData.get('articleId') as string,
         },
         data:{
@@ -129,11 +129,11 @@ export async function EditPostAction(prevState: any, formData: FormData) {
 
 // export async function DeletePostAction(prevState: any, formData: FormData) {
 export async function DeletePostAction( formData: FormData) {
-    const user = await requireUser()
+    const userId = await requireAuth()
 
     await prisma.post.delete({
         where:{
-            userId: user.id,
+            userId: userId,
             id: formData.get('articleId') as string,
         },
     })
@@ -143,11 +143,11 @@ export async function DeletePostAction( formData: FormData) {
 
 
 export async function UpdateSiteImageAction(formData: FormData) {
-    const user = await requireUser()
+    const userId = await requireAuth()
 
     await prisma.site.update({
         where:{
-            userId: user.id,
+            userId: userId,
             id: formData.get("siteId") as string
 
         },
@@ -160,11 +160,11 @@ export async function UpdateSiteImageAction(formData: FormData) {
 }
 
 export async function DeleteSiteAction(formData: FormData) {
-    const user = await requireUser()
+    const userId = await requireAuth()
 
     await prisma.site.delete({
         where:{
-            userId: user.id,
+            userId: userId,
             id: formData.get("siteId") as string
 
         },
@@ -174,11 +174,11 @@ export async function DeleteSiteAction(formData: FormData) {
 }
 
 export async function CreateSubscription() {
-    const user = await requireUser()
+    const userId = await requireAuth()
 
     let stripeUserId = await prisma.user.findUnique({
         where:{
-            id: user.id
+            id: userId
         },
         select:{
             customerId: true,
@@ -195,7 +195,7 @@ export async function CreateSubscription() {
 
         stripeUserId = await prisma.user.update({
             where:{
-                id: user.id,
+                id: userId,
             },
             data:{
                 customerId: stripeCustomer.id

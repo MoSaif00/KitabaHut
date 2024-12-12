@@ -1,27 +1,13 @@
-import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-interface AuthMiddlewareState {
-  userId?: string;
-}
+const isPublicRoute = createRouteMatcher(["/", "/api/webhook", '/sign-in(.*)', '/sign-up(.*)'])
 
-export default withAuth({
-  loginPage: "/api/auth/login",
-  isReturnToCurrentPage: true,
-  afterAuth(auth: AuthMiddlewareState, req: NextRequest) {
-    // If the user is not authenticated and trying to access protected routes
-    if (!auth.userId && req.nextUrl.pathname.startsWith("/dashboard")) {
-      return NextResponse.redirect(new URL("/api/auth/login", req.url));
-    }
-    return NextResponse.next();
-  },
-});
+export default clerkMiddleware(async (auth, request) => {
+  if (!isPublicRoute(request)) {
+    await auth.protect()
+  }
+})
 
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/api/auth/kinde_callback",
-    "/api/auth/creation",
-  ],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

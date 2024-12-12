@@ -7,7 +7,7 @@ import { DashboardItems } from "../components/dashboard/DashboardItems";
 import { ModeToggle } from "../components/dashboard/ModeToggle";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { SignOutButton } from '@clerk/nextjs';
 
 export const navLinks = [
     {
@@ -60,7 +60,7 @@ export default function DashboardLayout({ children }: { children: ReactNode; }) 
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuItem asChild>
-                                        <LogoutLink >Log out</LogoutLink>
+                                        <SignOutButton ><Link href={'/'}>Log out</Link></SignOutButton>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
