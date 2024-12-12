@@ -6,7 +6,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { BookOpenText, FilePenLine, FileX, NotebookPen, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import {
     Tooltip,
     TooltipContent,
