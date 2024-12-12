@@ -24,12 +24,12 @@ export function Hero() {
 
                 <nav className="hidden md:flex md:justify-end md:space-x-4">
                     <ModeToggle />
-                    <SignInButton mode="modal">
+                    <SignInButton mode="redirect" >
                         <Button variant='secondary'>
                             Sign in
                         </Button>
                     </SignInButton >
-                    <SignUpButton mode="modal">
+                    <SignUpButton mode="redirect">
                         <Button>
                             Sign up
                         </Button>
@@ -61,7 +61,7 @@ export function Hero() {
                             No coding, no hassle. Build beautiful blogs effortlessly and start sharing your ideas with the world — fast and easy.                        </p>
 
                         <div className="flex items-center gap-x-4 w-full justify-center mt-8">
-                            <SignUpButton mode="modal">
+                            <SignUpButton mode="redirect">
                                 <Button>
                                     Try for free
                                 </Button>

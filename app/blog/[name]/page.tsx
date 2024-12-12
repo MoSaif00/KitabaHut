@@ -52,15 +52,14 @@ export default async function BlogIndexPage({ params }: { params: blogIndexProps
                 <div className="col-span-1" />
                 <div className="flex items-center justify-center">
                     <div className="flex flex-col items-center text-center gap-3">
-                        {/* Blog Image */}
-                        <Image
-                            src={data.imageUrl || Logo}
-                            alt="blog logo"
-                            className="rounded-sm object-cover shadow-lg"
-                            width={80}
-                            height={80}
-                        />
                         <Link href={'/'} className="font-semibold">
+                            <Image
+                                src={data.imageUrl || Logo}
+                                alt="blog logo"
+                                className="rounded-sm object-cover shadow-lg"
+                                width={80}
+                                height={80}
+                            />
                             <h3 className="text-3xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
                                 {data.name}
                             </h3>
