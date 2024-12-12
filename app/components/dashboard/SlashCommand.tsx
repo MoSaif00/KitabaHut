@@ -5,10 +5,14 @@ import {
     Heading1,
     Heading2,
     Heading3,
+    Italic,
     List,
     ListOrdered,
+    Ruler,
+    Strikethrough,
     Text,
     TextQuote,
+    Video,
 } from "lucide-react";
 import { createSuggestionItems } from "novel/extensions";
 import { Command, renderItems } from "novel/extensions";
@@ -16,7 +20,7 @@ import { Command, renderItems } from "novel/extensions";
 export const suggestionItems = createSuggestionItems([
     {
         title: "Text",
-        description: "Just start typing with plain text.",
+        description: "Just start typing a text.",
         searchTerms: ["p", "paragraph"],
         icon: <Text size={18} />,
         command: ({ editor, range }) => {
@@ -30,7 +34,7 @@ export const suggestionItems = createSuggestionItems([
     },
     {
         title: "To-do List",
-        description: "Track tasks with a to-do list.",
+        description: "Track with a to-do list.",
         searchTerms: ["todo", "task", "list", "check", "checkbox"],
         icon: <CheckSquare size={18} />,
         command: ({ editor, range }) => {
@@ -81,7 +85,7 @@ export const suggestionItems = createSuggestionItems([
     },
     {
         title: "Bullet List",
-        description: "Create a simple bullet list.",
+        description: "Create a bullet list.",
         searchTerms: ["unordered", "point"],
         icon: <List size={18} />,
         command: ({ editor, range }) => {
@@ -90,7 +94,7 @@ export const suggestionItems = createSuggestionItems([
     },
     {
         title: "Numbered List",
-        description: "Create a list with numbering.",
+        description: "Create a numbered list.",
         searchTerms: ["ordered"],
         icon: <ListOrdered size={18} />,
         command: ({ editor, range }) => {
@@ -131,6 +135,51 @@ export const suggestionItems = createSuggestionItems([
             }
         },
     },
+    {
+        title: "YouTube Video",
+        description: "Embed a YouTube video.",
+        searchTerms: ["youtube", "video", "embed"],
+        icon: <Video size={18} />,  // Use the Video icon from lucide-react
+        command: ({ editor, range }) => {
+            const url = prompt("Enter YouTube URL:");
+            if (url) {
+                editor
+                    .chain()
+                    .focus()
+                    .deleteRange(range)
+                    .setYoutubeVideo({ src: url })  // Tiptap's setYoutubeVideo command
+                    .run();
+            }
+        },
+    },
+    {
+        title: "Strike",
+        description: "Strike through the text.",
+        searchTerms: ["strikethrough"],
+        icon: <Strikethrough size={18} />,
+        command: ({ editor, range }) => {
+            editor.chain().focus().deleteRange(range).toggleStrike().run();
+        },
+    },
+    {
+        title: "Italic",
+        description: "Italicize selected text.",
+        searchTerms: ["italic"],
+        icon: <Italic size={18} />,
+        command: ({ editor, range }) => {
+            editor.chain().focus().deleteRange(range).toggleItalic().run();
+        },
+    },
+    {
+        title: "Horizontal Line",
+        description: "Insert a horizontal rule.",
+        searchTerms: ["line", "rule", "separator"],
+        icon: <Ruler size={18} />,
+        command: ({ editor, range }) => {
+            editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+        },
+    },
+
 ]);
 
 export const slashCommand = Command.configure({

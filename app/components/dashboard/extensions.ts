@@ -7,8 +7,15 @@ import {
     StarterKit,
     Placeholder,
   } from "novel/extensions";
+  import { Youtube } from '@tiptap/extension-youtube'; 
   
   import { cx } from "class-variance-authority";
+  
+  const youtube = Youtube.configure({
+    controls: true, 
+    nocookie: true,  // Use privacy-enhanced mode
+  });
+
   
   // TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
   
@@ -89,5 +96,6 @@ import {
     taskList,
     taskItem,
     horizontalRule,
+    youtube
   ];
   

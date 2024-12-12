@@ -18,6 +18,21 @@ import TaskItem from '@tiptap/extension-task-item';
 import Bold from '@tiptap/extension-bold';
 import Image from '@tiptap/extension-image';
 import OrderedList from '@tiptap/extension-ordered-list';
+import HardBreak from '@tiptap/extension-hard-break';
+import BubbleMenu from '@tiptap/extension-bubble-menu';
+import CharacterCount from '@tiptap/extension-character-count';
+import Color from '@tiptap/extension-color';
+import YouTube from '@tiptap/extension-youtube';
+import Strike from '@tiptap/extension-strike';
+import Placeholder from '@tiptap/extension-placeholder';
+import Italic from '@tiptap/extension-italic';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import Dropcursor from '@tiptap/extension-dropcursor';
+import FloatingMenu from '@tiptap/extension-floating-menu';
+import Gapcursor from '@tiptap/extension-gapcursor';
+import Highlight from '@tiptap/extension-highlight';
+import History from '@tiptap/extension-history';
+import HorizontalRule from '@tiptap/extension-horizontal-rule';
 
 export function RenderArticle({ json }: { json: JSONContent; }) {
     const jsonOutPut = useMemo(() => {
@@ -38,7 +53,25 @@ export function RenderArticle({ json }: { json: JSONContent; }) {
             TaskItem,
             Bold,
             Image,
-            OrderedList
+            OrderedList,
+            HardBreak,
+            BubbleMenu,
+            CharacterCount,
+            Color,
+            YouTube.configure({
+                controls: true,
+                nocookie: true,
+            }),
+            Strike,
+            Placeholder,
+            Italic,
+            CodeBlockLowlight,
+            Dropcursor,
+            FloatingMenu,
+            Gapcursor,
+            Highlight,
+            History,
+            HorizontalRule,
         ]);
     }, [json]);
 

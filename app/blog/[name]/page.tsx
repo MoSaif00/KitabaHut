@@ -51,8 +51,8 @@ export default async function BlogIndexPage({ params }: { params: blogIndexProps
             <nav className="grid grid-cols-3 my-10">
                 <div className="col-span-1" />
                 <div className="flex items-center justify-center">
-                    <div className="flex flex-col items-center text-center gap-3">
-                        <Link href={'/'} className="font-semibold">
+                    <Link href={'/'} className="font-semibold">
+                        <div className="flex flex-col items-center text-center gap-3">
                             <Image
                                 src={data.imageUrl || Logo}
                                 alt="blog logo"
@@ -63,8 +63,8 @@ export default async function BlogIndexPage({ params }: { params: blogIndexProps
                             <h3 className="text-3xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
                                 {data.name}
                             </h3>
-                        </Link>
-                    </div>
+                        </div>
+                    </Link>
                 </div>
                 <div className="col-span-1 flex w-full justify-end">
                     <ModeToggle />

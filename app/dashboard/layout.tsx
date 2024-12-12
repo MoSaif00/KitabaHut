@@ -60,7 +60,9 @@ export default function DashboardLayout({ children }: { children: ReactNode; }) 
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuItem asChild>
-                                        <SignOutButton ><Link href={'/'}>Log out</Link></SignOutButton>
+                                        <SignOutButton >
+                                            <span className="cursor-pointer">Log out</span>
+                                        </SignOutButton>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
