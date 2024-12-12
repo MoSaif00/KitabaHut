@@ -1,11 +1,12 @@
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "../components/dashboard/EmptyState";
-import prisma from "../utils/db";
 import { requireUser } from "../utils/requireUser";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import DefaultImage from '@/public/defaultImage.png';
+import prisma from "../utils/db";
+import { Suspense } from "react";
 
 async function getData(userId: string) {
     const [sites, articles] = await Promise.all([
@@ -33,9 +34,17 @@ async function getData(userId: string) {
         sites, articles
     };
 }
+
 export default async function DashboardIndexPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <DashboardContent />
+        </Suspense>
+    );
+}
+
+async function DashboardContent() {
     const user = await requireUser();
-    console.log("🚀 ~ DashboardIndexPage ~ user:", user);
     const { sites, articles } = await getData(user.id);
 
     return (
