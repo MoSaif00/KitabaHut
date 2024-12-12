@@ -16,6 +16,8 @@ import CodeBlock from '@tiptap/extension-code-block';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
 import Bold from '@tiptap/extension-bold';
+import Image from '@tiptap/extension-image';
+import OrderedList from '@tiptap/extension-ordered-list';
 
 export function RenderArticle({ json }: { json: JSONContent; }) {
     const jsonOutPut = useMemo(() => {
@@ -34,13 +36,15 @@ export function RenderArticle({ json }: { json: JSONContent; }) {
             CodeBlock,
             TaskList,
             TaskItem,
-            Bold
+            Bold,
+            Image,
+            OrderedList
         ]);
     }, [json]);
 
     return (
         <div
-            className="prose m-auto w-11/12 sm:prose-lg dark:prose-invert sm:w-2/3 prose-li:marker:text-primary"
+            className="prose m-auto w-11/12 sm:prose-lg dark:prose-invert sm:w-2/3 prose-li:marker:text-primary list-none"
             dangerouslySetInnerHTML={{ __html: jsonOutPut }}
         />
     );

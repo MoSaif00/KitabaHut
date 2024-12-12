@@ -17,6 +17,7 @@ async function getData(subDir: string) {
         },
         select: {
             name: true,
+            imageUrl: true,
             posts: {
                 select: {
                     smallDescription: true,
@@ -49,21 +50,34 @@ export default async function BlogIndexPage({ params }: { params: blogIndexProps
         <>
             <nav className="grid grid-cols-3 my-10">
                 <div className="col-span-1" />
-                <div className="flex items-center gap-x-4 justify-center">
-                    <Link href={'/'} className="flex items-center gap-2 font-semibold" >
-                        <Image src={Logo} alt="kitaba logo" width={40} height={40} />
-                        <h3 className="text-3xl font-semibold tracking-tight">{data.name}</h3>
-                    </Link>
+                <div className="flex items-center justify-center">
+                    <div className="flex flex-col items-center text-center gap-3">
+                        {/* Blog Image */}
+                        <Image
+                            src={data.imageUrl || Logo}
+                            alt="blog logo"
+                            className="rounded-sm object-cover shadow-lg"
+                            width={80}
+                            height={80}
+                        />
+                        <Link href={'/'} className="font-semibold">
+                            <h3 className="text-3xl font-bold text-gray-800 dark:text-gray-100 tracking-tight">
+                                {data.name}
+                            </h3>
+                        </Link>
+                    </div>
                 </div>
-
                 <div className="col-span-1 flex w-full justify-end">
                     <ModeToggle />
                 </div>
             </nav>
 
-            <div className="grid grid-cols-1 gap4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-                {data.posts.map(item => (
-                    <Card key={item.id}>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+                {data.posts.map((item) => (
+                    <Card
+                        key={item.id}
+                        className="transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                    >
                         <Image
                             src={item.image ?? DefaultImage}
                             alt={item.title}
@@ -71,22 +85,27 @@ export default async function BlogIndexPage({ params }: { params: blogIndexProps
                             width={400}
                             height={200}
                         />
-                        <CardHeader>
-                            <CardTitle className="truncate">
+                        <CardHeader className="p-4">
+                            <CardTitle className="truncate text-lg font-semibold text-gray-800 dark:text-gray-100">
                                 {item.title}
                             </CardTitle>
-                            <CardDescription className="line-clamp-3">
+                            <CardDescription className="line-clamp-3 text-sm text-gray-600 dark:text-gray-400">
                                 {item.smallDescription}
                             </CardDescription>
                         </CardHeader>
                         <CardFooter>
-                            <Button asChild className="w-full">
-                                <Link href={`/blog/${subDirName}/${item.slug}`}>View Article</Link>
+                            <Button
+                                asChild
+                                className="w-full bg-primary text-white hover:bg-primary-dark"
+                            >
+                                <Link href={`/blog/${subDirName}/${item.slug}`}>
+                                    View Article
+                                </Link>
                             </Button>
                         </CardFooter>
                     </Card>
                 ))}
-            </div >
+            </div>
         </>
     );
 }

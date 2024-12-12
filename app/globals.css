@@ -67,3 +67,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Remove marker from the task list */
+[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Style task items (checkbox and text alignment) */
+[data-type="taskItem"] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Style the checkbox within the task item */
+[data-type="taskItem"] label {
+  display: flex;
+  align-items: center;
+}
+
+/* Optionally style the checkbox itself */
+[data-type="taskItem"] input[type="checkbox"] {
+  margin-right: 0.5rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}

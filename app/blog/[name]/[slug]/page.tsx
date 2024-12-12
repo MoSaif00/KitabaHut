@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/app/components/dashboard/ModeToggle";
 import { RenderArticle } from "@/app/components/dashboard/RenderArticle";
 import prisma from "@/app/utils/db";
 import { Button } from "@/components/ui/button";
@@ -36,13 +37,20 @@ export default async function SlugRoute({ params }: { params: slugParams; }) {
 
     return (
         <>
-            <div className="flex items-center gap-3 pt-10 pb-5">
-                <Button size="icon" variant="outline" asChild>
-                    <Link href={`/blog/${subDirName}`}>
-                        <ArrowLeft className="size-4" />
-                    </Link>
-                </Button>
-                <h1 className="text-xl font-semibold">Go Back</h1>
+            <div className="flex items-center justify-between gap-3 pt-10 pb-5">
+                <div className="flex items-center gap-3">
+
+                    <Button size="icon" variant="outline" asChild>
+                        <Link href={`/blog/${subDirName}`}>
+                            <ArrowLeft className="size-4" />
+                        </Link>
+                    </Button>
+                    <h1 className="text-xl font-semibold">Go Back</h1>
+                </div>
+
+                <div className="flex items-center">
+                    <ModeToggle />
+                </div>
             </div>
 
             <div className="flex flex-col items-center justify-center mb-10">

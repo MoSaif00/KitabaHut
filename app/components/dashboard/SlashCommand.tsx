@@ -1,6 +1,7 @@
 import {
     CheckSquare,
     Code,
+    FileImage,
     Heading1,
     Heading2,
     Heading3,
@@ -117,6 +118,18 @@ export const suggestionItems = createSuggestionItems([
         icon: <Code size={18} />,
         command: ({ editor, range }) =>
             editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
+    },
+    {
+        title: "Image",
+        description: "Insert an image from a URL.",
+        searchTerms: ["image", "photo", "picture", "media"],
+        icon: <FileImage size={18} />,
+        command: ({ editor, range }) => {
+            const url = prompt("Enter Image URL:");
+            if (url) {
+                editor.chain().focus().deleteRange(range).setImage({ src: url }).run();
+            }
+        },
     },
 ]);
 
