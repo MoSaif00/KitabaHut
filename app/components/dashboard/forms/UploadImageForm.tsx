@@ -36,7 +36,7 @@ export function UploadImageForm({ siteId }: uploadProps) {
                     <UploadDropzone
                         endpoint="imageUploader"
                         onClientUploadComplete={(res) => {
-                            setSiteImage(res[0].url);
+                            setSiteImage(res[0].ufsUrl);
                             toast.success('Image is uploaded');
                         }}
                         onUploadError={() => {

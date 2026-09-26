@@ -51,20 +51,20 @@ export default async function SiteIdRoute({ params }: { params: siteIdProps; }) 
 
     return (
         <>
-            <div className="flex w-full justify-end gap-x-4">
-                <Button asChild variant="secondary">
+            <div className="mb-4 flex w-full flex-col gap-2 sm:mb-6 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3">
+                <Button asChild variant="secondary" className="w-full sm:w-auto">
                     <Link href={`/blog/${data?.subdirectory}`}>
-                        <BookOpenText className="size-4 mr-2" /> View Blog
+                        <BookOpenText className="mr-2 size-4" /> View Blog
                     </Link>
                 </Button>
-                <Button asChild variant="secondary">
+                <Button asChild variant="secondary" className="w-full sm:w-auto">
                     <Link href={`/dashboard/sites/${siteId}/settings`}>
-                        <Settings className="size-4 mr-2" />Settings
+                        <Settings className="mr-2 size-4" />Settings
                     </Link>
                 </Button>
-                <Button asChild>
+                <Button asChild className="w-full sm:w-auto">
                     <Link href={`/dashboard/sites/${siteId}/create`}>
-                        <NotebookPen className="size-4 mr-2" />Create Article
+                        <NotebookPen className="mr-2 size-4" />Create Article
                     </Link>
                 </Button>
             </div>
@@ -76,9 +76,9 @@ export default async function SiteIdRoute({ params }: { params: siteIdProps; }) 
                     buttonText="Create new article"
                 />
             ) : (
-                <div>
+                <div className="min-w-0">
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="p-4 sm:p-6">
                             <CardTitle>
                                 Articles
                             </CardTitle>
@@ -86,8 +86,9 @@ export default async function SiteIdRoute({ params }: { params: siteIdProps; }) 
                                 Your place to manage your site articles
                             </CardDescription>
                         </CardHeader>
-                        <CardContent>
-                            <Table>
+                        <CardContent className="p-0 sm:p-6 sm:pt-0">
+                            <div className="w-full overflow-x-auto">
+                            <Table className="min-w-[640px]">
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>Image</TableHead>
@@ -109,7 +110,7 @@ export default async function SiteIdRoute({ params }: { params: siteIdProps; }) 
                                                     alt="Article Cover Image"
                                                 />
                                             </TableCell>
-                                            <TableCell className="font-medium">
+                                            <TableCell className="max-w-[12rem] truncate font-medium sm:max-w-none">
                                                 {item.title}
                                             </TableCell>
                                             <TableCell >
@@ -123,7 +124,7 @@ export default async function SiteIdRoute({ params }: { params: siteIdProps; }) 
 
                                             <TableCell >
                                                 <TooltipProvider>
-                                                    <div className="flex w-full justify-end gap-x-4">
+                                                    <div className="flex w-full justify-end gap-x-2 sm:gap-x-4">
                                                         <Tooltip>
                                                             <TooltipTrigger>
                                                                 <Button
@@ -165,6 +166,7 @@ export default async function SiteIdRoute({ params }: { params: siteIdProps; }) 
                                     ))}
                                 </TableBody>
                             </Table>
+                            </div>
                         </CardContent>
                     </Card>
                 </div >

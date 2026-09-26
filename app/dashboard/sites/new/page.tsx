@@ -33,8 +33,8 @@ export default function NewSiteRoute() {
 
 
     return (
-        <div className="flex flex-col flex-1 items-center justify-center">
-            <Card className="max-w-[550px]">
+        <div className="flex w-full flex-1 flex-col items-center justify-center px-1 py-4 sm:px-0">
+            <Card className="w-full max-w-[550px]">
                 <CardHeader>
                     <CardTitle>Create site</CardTitle>
                     <CardDescription>Create new site here.</CardDescription>
@@ -76,7 +76,7 @@ export default function NewSiteRoute() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <SubmitButton text="Submit" />
+                        <SubmitButton text="Submit" className="w-full sm:w-auto" />
                     </CardFooter>
                 </form>
             </Card>

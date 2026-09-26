@@ -1,12 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
+/** Require a signed-in user; redirects to sign-in when unauthenticated. */
 export async function requireAuth() {
-  const { userId } = await auth();
-  
-  if (!userId) {
-    redirect("/sign-in");
-  }
-  
+  const { userId } = await auth.protect();
   return userId;
 }

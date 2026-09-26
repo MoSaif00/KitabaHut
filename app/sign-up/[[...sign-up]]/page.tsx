@@ -1,11 +1,9 @@
 import { SignUp } from "@clerk/nextjs";
 
 export default function SignUpPage() {
-    return (
-        <div
-            className="flex justify-center items-center min-h-screen"
-        >
-            <SignUp />
-        </div>
-    );
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <SignUp forceRedirectUrl="/dashboard" signInForceRedirectUrl="/dashboard" />
+    </div>
+  );
 }

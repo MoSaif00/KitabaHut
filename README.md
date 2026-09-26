@@ -37,24 +37,34 @@ git clone https://github.com/MoSaif00/KitabaHut.git
 ### 2. Install dependencies
 
 ```bash
-cd KitabaHut-master
-npm install --legacy-peer-deps #needed for nextjs15 and react
+cd KitabaHut
+npm install
 ```
+
+> An `.npmrc` with `legacy-peer-deps=true` is included so install works cleanly with React 19 + `novel`. You no longer need `--legacy-peer-deps` manually.
 
 ### 3. Set up environment variables
 
-Create a .env.local file and add the following:
+Copy `.env.example` to `.env.local` and fill in the values.
+
+**Local vs production Clerk keys (important)**
+
+| Environment | Keys | Works on |
+| --- | --- | --- |
+| Local (`npm run dev`) | Development: `pk_test_` / `sk_test_` | `localhost` |
+| Vercel production | Production: `pk_live_` / `sk_live_` | your real domain + Clerk DNS |
+
+Using `pk_live_` on localhost causes: `Failed to load Clerk JS` from `clerk.your-domain/...`.
 
 ```bash
-# Clerk
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<your-clerk-publishable-key>
-CLERK_SECRET_KEY=<your-clerk-secret-key>
+# Clerk — LOCAL: Development instance keys from https://dashboard.clerk.com (toggle → Development)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
-WEBHOOK_SECRET=<your-clerk-webhook-secret> # for user.created and user.updated
-
+NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
+NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
+CLERK_WEBHOOK_SIGNING_SECRET=<dev-webhook-secret>
 
 # Supabase
 DATABASE_URL=<your-database-url>
@@ -68,6 +78,14 @@ STRIPE_SECRET_KEY=<your-stripe-secret-key>
 STRIPE_PRICE_ID=<your-stripe-price-id>
 STRIPE_WEBHOOK_SECRET=<your-stripe-webhook-secret>
 ```
+
+**Clerk production checklist (Vercel only)**
+
+1. Clerk Dashboard → switch to **Production**.
+2. Configure Domains + required DNS (a bare `*.vercel.app` host often needs a custom domain you control).
+3. Put `pk_live_` / `sk_live_` in **Vercel env vars**, not in local `.env.local` for day-to-day work.
+4. Create a Production webhook → `https://your-domain/api/webhook` (`user.created`, `user.updated`).
+5. Remove deprecated `NEXT_PUBLIC_CLERK_AFTER_SIGN_*` / `WEBHOOK_SECRET` if still present.
 
 ### 4. Run Prisma for database
 

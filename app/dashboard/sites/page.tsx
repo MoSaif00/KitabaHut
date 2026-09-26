@@ -39,8 +39,8 @@ export default async function SitesRoute() {
 
     return (
         <>
-            <div className="flex w-full justify-end">
-                <Button asChild>
+            <div className="mb-4 flex w-full justify-stretch sm:justify-end">
+                <Button asChild className="w-full sm:w-auto">
                     <Link
                         href={
                             (!subStatus || subStatus.status !== 'active')
@@ -63,25 +63,25 @@ export default async function SitesRoute() {
                     buttonText="Create new site"
                 />
             ) : (
-                <div className="grid grid-cols-1 gap4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
                     {data.map(item => (
-                        <Card key={item.id}>
+                        <Card key={item.id} className="overflow-hidden">
                             <Image
                                 src={item.imageUrl ?? DefaultImage}
                                 alt={item.name}
-                                className="rounded-t-lg object-cover w-full h-[200px]"
+                                className="h-[160px] w-full rounded-t-lg object-cover sm:h-[200px]"
                                 width={400}
                                 height={200}
                             />
-                            <CardHeader>
-                                <CardTitle className="truncate">
+                            <CardHeader className="space-y-2 p-4 sm:p-6">
+                                <CardTitle className="truncate text-base sm:text-lg">
                                     {item.name}
                                 </CardTitle>
                                 <CardDescription className="line-clamp-3">
                                     {item.description}
                                 </CardDescription>
                             </CardHeader>
-                            <CardFooter>
+                            <CardFooter className="p-4 pt-0 sm:p-6 sm:pt-0">
                                 <Button asChild className="w-full">
                                     <Link href={`/dashboard/sites/${item.id}`}>View Articles</Link>
                                 </Button>

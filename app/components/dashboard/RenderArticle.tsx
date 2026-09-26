@@ -1,3 +1,5 @@
+"use client";
+
 import { type JSONContent } from "novel";
 import { useMemo } from "react";
 import { generateHTML } from "@tiptap/html";
@@ -75,7 +77,7 @@ export function RenderArticle({ json }: { json: JSONContent; }) {
 
     return (
         <div
-            className="prose m-auto w-11/12 sm:prose-lg dark:prose-invert sm:w-2/3 prose-li:marker:text-primary list-none"
+            className="prose prose-sm m-auto w-full max-w-none break-words px-1 dark:prose-invert sm:prose-base sm:w-11/12 md:prose-lg md:w-2/3 prose-img:max-w-full prose-pre:overflow-x-auto prose-li:marker:text-primary"
             dangerouslySetInnerHTML={{ __html: jsonOutPut }}
         />
     );

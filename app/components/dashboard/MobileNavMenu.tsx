@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import Image from 'next/image';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { DashboardItems } from './DashboardItems';
 
-const MobileNavMenu = ({ logo }: { logo: string; }) => {
+const MobileNavMenu = ({ logo }: { logo: string | StaticImageData }) => {
     const [open, setOpen] = useState(false);
 
     const handleClose = () => setOpen(false);
@@ -21,16 +21,17 @@ const MobileNavMenu = ({ logo }: { logo: string; }) => {
                     <span className="sr-only">Toggle navigation menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-72 p-0">
+            <SheetContent side="left" className="w-[min(100%,18rem)] p-0 sm:w-72">
+                <SheetTitle className="sr-only">Dashboard navigation</SheetTitle>
                 <div className="flex h-full flex-col">
                     <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
                         <Link
                             href={'/'}
-                            className="flex items-center gap-2 font-semibold"
+                            className="flex min-w-0 items-center gap-2 font-semibold"
                             onClick={handleClose}
                         >
-                            <Image src={logo} alt="kitaba logo" className="size-8" />
-                            <h3 className="text-2xl font-semibold tracking-tight">
+                            <Image src={logo} alt="kitaba logo" className="size-8 shrink-0" />
+                            <h3 className="truncate text-xl font-semibold tracking-tight sm:text-2xl">
                                 Kitaba<span className="text-primary">Hut</span>
                             </h3>
                         </Link>

@@ -91,7 +91,7 @@ export default function ArticleCreationRoute() {
                         </div>
                         <div className="grid gap-2">
                             <Label>Slug</Label>
-                            <div className="flex gap-5">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:gap-5">
                                 <Input
                                     key={fields.slug.key}
                                     name={fields.slug.name}
@@ -99,8 +99,9 @@ export default function ArticleCreationRoute() {
                                     placeholder="Write article slug"
                                     onChange={e => setSlug(e.target.value)}
                                     value={slug}
+                                    className="min-w-0 flex-1"
                                 />
-                                <Button onClick={handleSlugGeneration} variant="secondary" type="button">
+                                <Button onClick={handleSlugGeneration} variant="secondary" type="button" className="w-full shrink-0 sm:w-auto">
                                     <Sparkle className="size-4 mr-2" /> Generate Slug
                                 </Button>
                             </div>
@@ -130,14 +131,14 @@ export default function ArticleCreationRoute() {
                                 <Image
                                     src={imageUrl}
                                     alt="Uploaded image"
-                                    className="object-cover w-[400px] h-[200px] rounded-lg"
-                                    width={200}
+                                    className="h-auto w-full max-w-[400px] rounded-lg object-cover"
+                                    width={400}
                                     height={200}
                                 />
                             ) : (
                                 <UploadDropzone
                                     onClientUploadComplete={res => {
-                                        setImageUrl(res[0].url);
+                                        setImageUrl(res[0].ufsUrl);
                                         toast.success('Image has been uploaded');
                                     }}
                                     endpoint="imageUploader"
