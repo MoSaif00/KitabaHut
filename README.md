@@ -82,10 +82,15 @@ STRIPE_WEBHOOK_SECRET=<your-stripe-webhook-secret>
 **Clerk production checklist (Vercel only)**
 
 1. Clerk Dashboard → switch to **Production**.
-2. Configure Domains + required DNS (a bare `*.vercel.app` host often needs a custom domain you control).
-3. Put `pk_live_` / `sk_live_` in **Vercel env vars**, not in local `.env.local` for day-to-day work.
-4. Create a Production webhook → `https://your-domain/api/webhook` (`user.created`, `user.updated`).
-5. Remove deprecated `NEXT_PUBLIC_CLERK_AFTER_SIGN_*` / `WEBHOOK_SECRET` if still present.
+2. For a `*.vercel.app` host you **cannot** use DNS CNAMEs. Enable a Frontend API proxy instead:
+   - Clerk Dashboard → **Domains** → Frontend API → **Set proxy configuration**
+   - Proxy URL: `https://kitabahut.vercel.app/__clerk` (your real production URL)
+   - In Vercel env (Config): `NEXT_PUBLIC_CLERK_PROXY_URL=https://kitabahut.vercel.app/__clerk`
+   - This repo already enables `frontendApiProxy` in `middleware.ts` and matches `/__clerk/(.*)`.
+3. Prefer a custom domain you control long-term (better cookies/DNS); then you can use CNAME instead of proxy.
+4. Put `pk_live_` / `sk_live_` in **Vercel env vars**, not in local `.env.local` for day-to-day work.
+5. Create a Production webhook → `https://your-domain/api/webhook` (`user.created`, `user.updated`).
+6. Remove deprecated `NEXT_PUBLIC_CLERK_AFTER_SIGN_*` / `WEBHOOK_SECRET` if still present.
 
 ### 4. Run Prisma for database
 
