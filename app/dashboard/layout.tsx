@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import Logo from "@/public/kitaba.svg";
 import Image from "next/image";
-import { CircleUser, Earth, Gem, Home } from "lucide-react";
+import { CircleUser } from "lucide-react";
 import { DashboardItems } from "../components/dashboard/DashboardItems";
 import { ModeToggle } from "../components/dashboard/ModeToggle";
 import {
@@ -15,24 +15,6 @@ import { Button } from "@/components/ui/button";
 import { SignOutButton } from "@clerk/nextjs";
 import MobileNavMenu from "../components/dashboard/MobileNavMenu";
 import { auth } from "@clerk/nextjs/server";
-
-export const navLinks = [
-  {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: Home,
-  },
-  {
-    name: "Sites",
-    href: "/dashboard/sites",
-    icon: Earth,
-  },
-  {
-    name: "Pricing",
-    href: "/dashboard/pricing",
-    icon: Gem,
-  },
-];
 
 export default async function DashboardLayout({
   children,
