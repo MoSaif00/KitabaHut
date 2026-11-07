@@ -1,0 +1,30 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    # Twice weekly: Monday and Thursday at 08:00 UTC
+    - cron: "0 8 * * 1,4"
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    name: Ping kitaba database
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Ping Supabase
+        env:
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+        run: |
+          if [ -z "$DIRECT_URL" ]; then
+            echo "Missing secret: DIRECT_URL"
+            exit 1
+          fi
+
+          psql "$DIRECT_URL" \
+            -v ON_ERROR_STOP=1 \
+            -c "SELECT 1 AS keepalive, NOW() AS pinged_at;"
