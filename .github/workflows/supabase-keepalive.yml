@@ -2,8 +2,8 @@ name: Supabase Keep Alive
 
 on:
   schedule:
-    # Twice weekly: Monday and Thursday at 08:00 UTC
-    - cron: "0 8 * * 1,4"
+    # Daily at 08:00 UTC — free projects pause after ~7 days of inactivity
+    - cron: "0 8 * * *"
   workflow_dispatch:
 
 jobs:
