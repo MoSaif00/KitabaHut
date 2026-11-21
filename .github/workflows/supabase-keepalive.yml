@@ -49,6 +49,7 @@ jobs:
           SQL
 
       # Also hit the live app so Supabase sees "connected application" traffic.
+      # Uses x-keepalive-secret (not Authorization) — Clerk treats Bearer as a JWT.
       - name: Ping app keepalive endpoint
         env:
           KEEPALIVE_URL: ${{ secrets.KEEPALIVE_URL }}
@@ -60,5 +61,5 @@ jobs:
           fi
 
           curl -fsS \
-            -H "Authorization: Bearer ${KEEPALIVE_SECRET}" \
+            -H "x-keepalive-secret: ${KEEPALIVE_SECRET}" \
             "${KEEPALIVE_URL}"

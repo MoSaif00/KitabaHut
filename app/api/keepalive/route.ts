@@ -3,15 +3,24 @@ import prisma from "@/app/utils/db";
 
 /**
  * Keep-alive endpoint for Supabase Free-tier inactivity.
- * Protected by KEEPALIVE_SECRET — called from GitHub Actions.
+ * Protected by KEEPALIVE_SECRET via x-keepalive-secret header
+ * (not Authorization — Clerk middleware treats Bearer as a JWT).
  */
 export async function GET(request: NextRequest) {
-  const secret = process.env.KEEPALIVE_SECRET;
+  const secret = process.env.KEEPALIVE_SECRET?.trim();
   const provided =
-    request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ??
-    request.nextUrl.searchParams.get("secret");
+    request.headers.get("x-keepalive-secret")?.trim() ??
+    request.nextUrl.searchParams.get("secret")?.trim() ??
+    "";
 
-  if (!secret || provided !== secret) {
+  if (!secret) {
+    return NextResponse.json(
+      { error: "KEEPALIVE_SECRET is not set on the server" },
+      { status: 503 }
+    );
+  }
+
+  if (provided !== secret) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
