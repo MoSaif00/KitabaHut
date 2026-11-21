@@ -2,8 +2,9 @@ name: Supabase Keep Alive
 
 on:
   schedule:
-    # Daily at 08:00 UTC — free projects pause after ~7 days of inactivity
-    - cron: "0 8 * * *"
+    # Every 6 hours — Free projects pause after ~7 days of low DB activity.
+    # A single daily SELECT 1 is often not enough for Supabase's threshold.
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 jobs:
@@ -16,7 +17,7 @@ jobs:
       - name: Install PostgreSQL client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      - name: Ping Supabase
+      - name: Ping Supabase with real table activity
         env:
           DIRECT_URL: ${{ secrets.DIRECT_URL }}
         run: |
@@ -25,6 +26,39 @@ jobs:
             exit 1
           fi
 
+          # Writes + reads against app tables register as user database activity.
           psql "$DIRECT_URL" \
             -v ON_ERROR_STOP=1 \
-            -c "SELECT 1 AS keepalive, NOW() AS pinged_at;"
+            <<'SQL'
+          CREATE TABLE IF NOT EXISTS "_keepalive" (
+            id int PRIMARY KEY DEFAULT 1,
+            last_ping timestamptz NOT NULL DEFAULT now(),
+            ping_count bigint NOT NULL DEFAULT 0
+          );
+
+          INSERT INTO "_keepalive" (id, last_ping, ping_count)
+          VALUES (1, now(), 1)
+          ON CONFLICT (id) DO UPDATE
+          SET last_ping = now(),
+              ping_count = "_keepalive".ping_count + 1;
+
+          SELECT count(*) AS users FROM "User";
+          SELECT count(*) AS sites FROM "Site";
+          SELECT count(*) AS posts FROM "Post";
+          SELECT id, last_ping, ping_count FROM "_keepalive" WHERE id = 1;
+          SQL
+
+      # Also hit the live app so Supabase sees "connected application" traffic.
+      - name: Ping app keepalive endpoint
+        env:
+          KEEPALIVE_URL: ${{ secrets.KEEPALIVE_URL }}
+          KEEPALIVE_SECRET: ${{ secrets.KEEPALIVE_SECRET }}
+        run: |
+          if [ -z "$KEEPALIVE_URL" ] || [ -z "$KEEPALIVE_SECRET" ]; then
+            echo "Skipping app ping (optional secrets KEEPALIVE_URL / KEEPALIVE_SECRET not set)"
+            exit 0
+          fi
+
+          curl -fsS \
+            -H "Authorization: Bearer ${KEEPALIVE_SECRET}" \
+            "${KEEPALIVE_URL}"
